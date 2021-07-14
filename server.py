@@ -29,20 +29,19 @@ class Server:
     @staticmethod
     def get_request(client_connection):
         request = client_connection.recv(1024).decode()
-
         return request
 
     @staticmethod
     def send_response(client_socket):
-        response_head = 'HTTP/1.1 200 OK\r\n Content-Type: image/jpg\r\n Content-Length: 740782\r\n\r\n'
-        response_body = utils.get_file('/home/urick0s/Pictures/568edd37187323.573a47d0cb51f.jpg')
-
-        client_socket.send(response_head.encode())
-       #client_socket.send(response_body.encode())
-        with open('/home/urick0s/Pictures/568edd37187323.573a47d0cb51f.jpg', 'rb') as f:
-            client_socket.sendfile(f, 0)
+        try:
+            response_head = 'HTTP/1.1 200 OK\r\nContent-Type: image/jpg\r\n Content-Length: 740782\r\n\r\n'
+            client_socket.send(response_head.encode())
+            with open('/home/urick0s/Pictures/568edd37187323.573a47d0cb51f.jpg', 'rb') as f:
+                client_socket.sendfile(f, 0)
+        except FileNotFoundError:
+            client_socket.send('HTTP/1.1 200 OK\r\n Content-Type: text/html\r\n\r\n'.encode())
+            client_socket.send('Code: 404 request to non-exist file'.encode())
         client_socket.close()
-
     def close_server_socket(self):
         # Close socket
         self.server_socket.close()
