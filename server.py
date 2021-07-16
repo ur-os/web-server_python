@@ -1,6 +1,6 @@
 import socket
 import utils
-
+import parser
 
 class Server:
     # Define socket host and port
@@ -36,8 +36,8 @@ class Server:
         try:
             response_head = 'HTTP/1.1 200 OK\r\nContent-Type: image/jpg\r\n Content-Length: 740782\r\n\r\n'
             client_socket.send(response_head.encode())
-            with open('/home/urick0s/Pictures/568edd37187323.573a47d0cb51f.jpg', 'rb') as f:
-                client_socket.sendfile(f, 0)
+            with open('/home/urick0s/Pictures/568edd37187323.573a47d0cb51f.jpg', 'rb') as file:
+                client_socket.sendfile(file, 0)
         except FileNotFoundError:
             client_socket.send('HTTP/1.1 200 OK\r\n Content-Type: text/html\r\n\r\n'.encode())
             client_socket.send('Code: 404 request to non-exist file'.encode())
