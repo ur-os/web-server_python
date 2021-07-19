@@ -1,19 +1,17 @@
 import re
 
 
-class Parser:
-    request = ''
+def slice_request(string) -> list:
+    return re.split(r'\r\n', string)
 
-    def setup_request(self, string):
-        self.request = re.split('r\n\r', string)
-        print(self.request)
 
-    @staticmethod
-    def get_path(string):
-        return re.search(r'', string)
+def get_string(string, row_number):
+    return string[row_number]
 
-    def get_string(self, string_number):
-        return self.request[string_number]
 
-    def parse(self, request):
-        pass
+def get_path(header_with_path) -> str:
+    return re.split(r' ', header_with_path)[1]
+
+
+def parse(request):
+    pass
