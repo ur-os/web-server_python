@@ -1,11 +1,11 @@
 import re
 
 
-def slice_request(string) -> list:
+def slice_request(string: str) -> list:
     return re.split(r'\r\n', string)
 
 
-def get_string(string, row_number):
+def get_string(string: str, row_number: int) -> str:
     return string[row_number]
 
 
